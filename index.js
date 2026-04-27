@@ -9,7 +9,7 @@ loginbtn.addEventListener('click',(e)=>{
         alert('please provide username and password')
     }
     else if(useername === "admin" && password === "admin123"){
-        
+        window.location.href = "/home.html"
     }
     else{
         alert('Invalid  username or password')
