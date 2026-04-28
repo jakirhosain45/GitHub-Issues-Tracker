@@ -50,9 +50,9 @@
     <main class="container mx-auto">
         <section>
             <div class="bg-white mt-12 rounded-md py-6 px-3 shadow-md">
-                <button class="bg-[#4A00FF] text-white btn lg:px-10 text-xl">all</button>
-                <button class="  btn lg:px-10 text-xl">Open</button>
-                <button class=" btn lg:px-10 text-xl">Closed</button>
+                <button value="all"  class= "bg-[#4A00FF] text-white filter-btn btn lg:px-10 text-xl">all</button>
+                <button value="open" class=" filter-btn btn lg:px-10 text-xl">Open</button>
+                <button value="closed"  class="filter-btn  btn lg:px-10 text-xl">Closed</button>
             </div>
         </section>
 
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <!-- card container -->
-            <div class="flex items-center justify-center">
+            <div id="loading" class="flex items-center justify-center">
                  <span class="loading loading-dots loading-xl "></span>
             </div>
             <div id="cardContainer" class="p-5 grid md:grid-cols-2 lg:grid-cols-4 gap-3">

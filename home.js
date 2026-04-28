@@ -1,23 +1,48 @@
-const cardContainer =document.getElementById('cardContainer')
+const cardContainer =document.getElementById('cardContainer');
+const loading =document.getElementById('loading');
+let isloading =true;
+const buttons =document.querySelectorAll('.filter-btn');
 
-const fetchdata = () =>{
+let allData =[];
+
+const fetchdata = (status) =>{
+    isloading = true;
+    loading.style.display = "flex"
+    
     fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues')
     .then((res)=>res.json())
     .then((data) =>{
-        displayloadData(data.data);
+       if(status){
+        if(status === 'all'){
+            displayloadData(data.data)
+            isloading = false;
+            loading.style.display = 'none';
+            return
+        }
         
+        const filterdata =data.data.filter((filtaring)=>filtaring.status === status);
+        console.log(filterdata);
+        
+        displayloadData(filterdata);
+        return
+        
+        
+       }
+        displayloadData(data.data);
+        isloading =false
+        loading.style.display = "none"
     });
 
 }
 const displayloadData =(datas)=>{
+    cardContainer.innerHTML ="";
    datas.forEach(data => {
-    console.log(data);
-    // <img class="w-10" src="./img/Open-Status.png" alt=""></img>
+    
     const div =document.createElement('div');
     div.innerHTML = `
-    <div class="bg-white rounded-md h-full p-3  space-y-2  shadow-md ${data.priority === 'low' ? 'border-t-4 border-t-[#A855F7]' : 'border-t-4 border-t-[#6dc98b]'}">
+    <div class="bg-white rounded-md h-full p-3  space-y-2  shadow-md ${data.status === 'closed' ? 'border-t-4 border-t-[#A855F7]' : 'border-t-4 border-t-[#6dc98b]'}">
                     <div class="flex items-center justify-between">
-                        ${data.priority === "high" || data.priority === 'medium'? `<img class="w-10" src="./img/Open-Status.png" alt=""></img>`:`<img class="w-10" src="./img/Closed- Status .png" alt="">`}
+                        ${data.status === 'open'? `<img class="w-10" src="./img/Open-Status.png" alt=""></img>`:`<img class="w-10" src="./img/Closed- Status .png" alt="">`}
                         <h2 class=" px-5 py-2 rounded-full font-semibold  ${data.priority === "high" ? "bg-[#FEECEC] text-red-500" : data.priority === "medium" ? 'bg-[#FDE68A] text-amber-600' : "bg-[#9CA3AF] text-gray-300"}">${data.priority}</h2>
                     </div>
                     <h1 class="text-xl font-bold">${data.title}</h1>
@@ -35,8 +60,17 @@ const displayloadData =(datas)=>{
     `
   cardContainer.append(div)
    });
-   
-    
-   
+
 }
+
+buttons.forEach(btn =>{
+    btn.addEventListener('click', (e) =>{
+        const status =e.target.value;
+        fetchdata(status)
+        
+        
+        
+    });
+});
+
 fetchdata()
