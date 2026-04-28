@@ -41,9 +41,9 @@
       <path d="m21 21-4.3-4.3"></path>
     </g>
   </svg>
-  <input type="search" required placeholder="Search" />
+  <input id="searchIssues" type="search" required placeholder="Search" />
 </label>
-<button class="btn bg-[#4A00FF] font-bold text-white">+ new Issue </button>
+<button id="searchbtn" class="btn bg-[#4A00FF] font-bold text-white">+ new Issue </button>
             </div>
         </nav>
     </header>
@@ -61,7 +61,7 @@
                 <div class="flex items-center gap-2">
                     <img class="bg-[#ECE4FF] p-2 rounded-full" src="./img/Aperture.png" alt="">
                     <div>
-                        <h3 class="text-xl font-semibold">50 Issues</h3>
+                        <h3 class="text-xl font-semibold"> <span id="totalcount" class="text-xl font-semibold">50</span> Issues</h3>
                         <p class="text-gray-400">Track and manage your project issues</p>
                     </div>
                 </div>

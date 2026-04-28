@@ -2,8 +2,11 @@ const cardContainer =document.getElementById('cardContainer');
 const loading =document.getElementById('loading');
 let isloading =true;
 const buttons =document.querySelectorAll('.filter-btn');
+const totalcount= document.getElementById('totalcount')
+const searchIssues= document.getElementById('searchIssues')
+const searchbtn= document.getElementById('searchbtn')
 
-let allData =[];
+
 
 const fetchdata = (status) =>{
     isloading = true;
@@ -21,21 +24,21 @@ const fetchdata = (status) =>{
         }
         
         const filterdata =data.data.filter((filtaring)=>filtaring.status === status);
-        console.log(filterdata);
-        
+        loading.style.display = 'none';
         displayloadData(filterdata);
         return
         
         
        }
         displayloadData(data.data);
-        isloading =false
+        isloading =false;
         loading.style.display = "none"
     });
 
 }
 const displayloadData =(datas)=>{
     cardContainer.innerHTML ="";
+    totalcount.innerHTML =`${datas.length}`
    datas.forEach(data => {
     
     const div =document.createElement('div');
@@ -65,12 +68,29 @@ const displayloadData =(datas)=>{
 
 buttons.forEach(btn =>{
     btn.addEventListener('click', (e) =>{
-        const status =e.target.value;
+        buttons.forEach(b => {
+            b.classList.remove('bg-[#4A00FF]', 'text-white');
+        });
+        e.currentTarget.classList.add('bg-[#4A00FF]', 'text-white')
+        const status =e.currentTarget.value;
         fetchdata(status)
         
         
         
     });
 });
+
+const handelsearch = (searchvalue) =>{
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchvalue}`)
+    .then((res) => res.json())
+    .then((data )=> displayloadData(data.data)
+    )
+} 
+
+searchbtn.addEventListener('click', () =>{
+    const searchissues = searchIssues.value;
+    handelsearch(searchissues);
+    
+})
 
 fetchdata()
