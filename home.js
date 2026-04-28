@@ -1,0 +1,42 @@
+const cardContainer =document.getElementById('cardContainer')
+
+const fetchdata = () =>{
+    fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues')
+    .then((res)=>res.json())
+    .then((data) =>{
+        displayloadData(data.data);
+        
+    });
+
+}
+const displayloadData =(datas)=>{
+   datas.forEach(data => {
+    console.log(data);
+    // <img class="w-10" src="./img/Open-Status.png" alt=""></img>
+    const div =document.createElement('div');
+    div.innerHTML = `
+    <div class="bg-white rounded-md h-full p-3  space-y-2  shadow-md ${data.priority === 'low' ? 'border-t-4 border-t-[#A855F7]' : 'border-t-4 border-t-[#6dc98b]'}">
+                    <div class="flex items-center justify-between">
+                        ${data.priority === "high" || data.priority === 'medium'? `<img class="w-10" src="./img/Open-Status.png" alt=""></img>`:`<img class="w-10" src="./img/Closed- Status .png" alt="">`}
+                        <h2 class=" px-5 py-2 rounded-full font-semibold  ${data.priority === "high" ? "bg-[#FEECEC] text-red-500" : data.priority === "medium" ? 'bg-[#FDE68A] text-amber-600' : "bg-[#9CA3AF] text-gray-300"}">${data.priority}</h2>
+                    </div>
+                    <h1 class="text-xl font-bold">${data.title}</h1>
+                    <p class="text-gray-400 line-clamp-2">${data.description}</p>
+                    <div class="flex items-center gap-2 pb-2">
+                        <button class="p-2 rounded-2xl bg-red-100 text-red-500 font-semibold">${data.labels?.[0] || ""}</button>
+                        ${data.labels?.[1] ?`
+                            <button class="p-2 rounded-2xl bg-[#FDE68A] text-red-500 font-semibold"> ${data.labels[1]}<button/>`: ""}
+                    </div>
+
+                    <hr class="text-gray-300">
+                    <p class="text-gray-400">${data.author}</p>
+                    <p class="text-gray-400">1/15/2024</p>
+                </div>
+    `
+  cardContainer.append(div)
+   });
+   
+    
+   
+}
+fetchdata()
