@@ -1,101 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
     <!-- tailwind -->
-     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- font awesome cdn -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-     <!-- google font -->
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="./img/github-logo.png"
+      type="image/x-icon"
+    />
     <style>
-        .geist {
-    font-family: "Geist", sans-serif;
-    
-    }
-        </style>
+      .geist {
+        font-family: "Geist", sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-[#F8FAFC] geist h-svh flex flex-col justify-center items-center"
+  >
+    <div class="bg-white shadow-lg p-5 rounded-lg m-2">
+      <div class="flex items-center justify-center">
+        <img src="./img/github-logo.png" alt="" />
+      </div>
+      <div class="text-center">
+        <h2 class="text-3xl font-bold p-2">GitHub Issues Tracker</h2>
+        <p class="text-gray-500">Sign in to manage your issues</p>
+      </div>
+      <!-- user name -->
+      <p class="font-semibold py-2">Username</p>
+      <label class="input validator">
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </g>
+        </svg>
+        <input
+          id="username"
+          type="text"
+          required
+          placeholder="Username"
+          pattern="[A-Za-z][A-Za-z0-9\-]*"
+          minlength="3"
+          maxlength="30"
+          title="Only letters, numbers or dash"
+        />
+      </label>
+      <p class="text-[#4A00FF]">Default: admin</p>
+      <!-- password -->
+      <p class="font-semibold py-2">Password</p>
+      <label class="input validator">
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+            ></path>
+            <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+          </g>
+        </svg>
+        <input
+          id="password"
+          type="password"
+          required
+          placeholder="Password"
+          minlength="8"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+        />
+      </label>
 
-</head>
-<body class="bg-[#F8FAFC] geist h-svh flex flex-col justify-center items-center">
-    <div class="bg-white shadow-lg  p-5 rounded-lg m-2">
-        <div class="flex items-center justify-center">
-            <img src="./img/github-logo.png" alt="">
-        </div>
-        <div class="text-center">
-            <h2 class="text-3xl font-bold p-2">GitHub Issues Tracker</h2>
-            <p class="text-gray-500">Sign in to manage your issues</p>
-        </div>
-        <!-- user name -->
-             <p class="font-semibold py-2">Username</p>
-         <label class="input validator">
-        
-  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2.5"
-      fill="none"
-      stroke="currentColor"
-    >
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </g>
-  </svg>
-  <input
-  id="username"
-    type="text"
-    required
-    placeholder="Username"
-    pattern="[A-Za-z][A-Za-z0-9\-]*"
-    minlength="3"
-    maxlength="30"
-    title="Only letters, numbers or dash"
-  />
-</label>
-    <p class="text-[#4A00FF]">Default: admin</p>
-    <!-- password -->
-     <p class="font-semibold py-2">Password</p>
-    <label class="input validator">
-  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2.5"
-      fill="none"
-      stroke="currentColor"
-    >
-      <path
-        d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
-      ></path>
-      <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
-    </g>
-  </svg>
-  <input
-  id="password"
-    type="password"
-    required
-    placeholder="Password"
-    minlength="8"
-    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-    title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-  />
-</label>
-
-    <p class="text-[#4A00FF]">Default: admin123</p>
-    <button id="loginbtn" class="w-full bg-[#4A00FF] text-white rounded-md py-2 mt-3 font-semibold">Sign In</button>
-    <hr class="border-t-1 border-gray-400 my-4">
-    <h4 class="text-gray-400 text-center pt-5 pb-2">Demo Credentials:</h4>
-    <div class="bg-[#F8FAFC] text-center rounded-md p-4">
+      <p class="text-[#4A00FF]">Default: admin123</p>
+      <button
+        id="loginbtn"
+        class="w-full bg-[#4A00FF] text-white rounded-md py-2 mt-3 font-semibold"
+      >
+        Sign In
+      </button>
+      <hr class="border-t-1 border-gray-400 my-4" />
+      <h4 class="text-gray-400 text-center pt-5 pb-2">Demo Credentials:</h4>
+      <div class="bg-[#F8FAFC] text-center rounded-md p-4">
         <h2><span class="font-bold">Username:</span> admin</h2>
         <h2><span class="font-bold">Password: </span>admin123</h2>
-    </div>
+      </div>
     </div>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>

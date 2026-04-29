@@ -1,64 +1,75 @@
-const cardContainer =document.getElementById('cardContainer');
-const loading =document.getElementById('loading');
-let isloading =true;
-const buttons =document.querySelectorAll('.filter-btn');
-const totalcount= document.getElementById('totalcount')
-const searchIssues= document.getElementById('searchIssues')
-const searchbtn= document.getElementById('searchbtn')
+const cardContainer = document.getElementById("cardContainer");
+const loading = document.getElementById("loading");
+let isloading = true;
+const buttons = document.querySelectorAll(".filter-btn");
+const totalcount = document.getElementById("totalcount");
+const searchIssues = document.getElementById("searchIssues");
+const searchbtn = document.getElementById("searchbtn");
+const notfound = document.getElementById("notfound");
 
+const fetchdata = (status) => {
+  isloading = true;
+  loading.style.display = "flex";
 
-
-const fetchdata = (status) =>{
-    isloading = true;
-    loading.style.display = "flex"
-    
-    fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues')
-    .then((res)=>res.json())
-    .then((data) =>{
-       if(status){
-        if(status === 'all'){
-            displayloadData(data.data)
-            isloading = false;
-            loading.style.display = 'none';
-            return
+  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    .then((res) => res.json())
+    .then((data) => {
+      if (status) {
+        if (status === "all") {
+          displayloadData(data.data);
+          isloading = false;
+          loading.style.display = "none";
+          return;
         }
-        
-        const filterdata =data.data.filter((filtaring)=>filtaring.status === status);
-        loading.style.display = 'none';
-        displayloadData(filterdata);
-        return
-        
-        
-       }
-        displayloadData(data.data);
-        isloading =false;
-        loading.style.display = "none"
-    });
 
-}
-const displayloadData =(datas)=>{
-    cardContainer.innerHTML ="";
-    totalcount.innerHTML =`${datas.length}`
-   datas.forEach(data => {
-    
-    const div =document.createElement('div');
+        const filterdata = data.data.filter(
+          (filtaring) => filtaring.status === status,
+        );
+        loading.style.display = "none";
+        displayloadData(filterdata);
+        return;
+      }
+      displayloadData(data.data);
+      isloading = false;
+      loading.style.display = "none";
+    });
+};
+const displayloadData = (datas) => {
+  cardContainer.innerHTML = "";
+  if (datas.length === 0) {
+    cardContainer.innerHTML = `
+        <div class="space-y-3">
+                    <div class="flex items-center justify-center text-center flex-col">
+                    <div>
+                        <i class="fa-solid fa-ban text-8xl text-gray-500"></i>
+                    </div>
+                    <h2 class="text-4xl font-semibold text-gray-600">No results found</h2>
+                </div>`;
+  }
+  totalcount.innerHTML = `${datas.length}`;
+  datas.forEach((data) => {
+    const div = document.createElement("div");
     div.innerHTML = `
-    <div onclick="document.getElementById('modal-${data.id}').showModal()" class="bg-white rounded-md h-full p-3 hover:cursor-pointer space-y-2  shadow-md ${data.status === 'closed' ? 'border-t-4 border-t-[#A855F7]' : 'border-t-4 border-t-[#6dc98b]'}">
+    <div onclick="document.getElementById('modal-${data.id}').showModal()" class="bg-white rounded-md h-full p-3 hover:cursor-pointer space-y-2  shadow-md ${data.status === "closed" ? "border-t-4 border-t-[#A855F7]" : "border-t-4 border-t-[#6dc98b]"}">
                     <div class="flex items-center justify-between">
-                        ${data.status === 'open'? `<img class="w-10" src="./img/Open-Status.png" alt=""></img>`:`<img class="w-10" src="./img/Closed- Status .png" alt="">`}
-                        <h2 class=" px-5 py-2 rounded-full font-semibold  ${data.priority === "high" ? "bg-[#FEECEC] text-red-500" : data.priority === "medium" ? 'bg-[#FDE68A] text-amber-600' : "bg-[#9CA3AF] text-gray-300"}">${data.priority}</h2>
+                        ${data.status === "open" ? `<img class="w-10" src="./img/Open-Status.png" alt=""></img>` : `<img class="w-10" src="./img/Closed- Status .png" alt="">`}
+                        <h2 class=" px-5 py-2 rounded-full font-semibold  ${data.priority === "high" ? "bg-[#FEECEC] text-red-500" : data.priority === "medium" ? "bg-[#FDE68A] text-amber-600" : "bg-[#9CA3AF] text-gray-300"}">${data.priority}</h2>
                     </div>
                     <h1 class="text-xl font-bold">${data.title}</h1>
                     <p class="text-gray-400 line-clamp-2">${data.description}</p>
                     <div class="flex items-center gap-2 pb-2">
                         <button class="p-2 rounded-2xl bg-red-100 text-red-500 font-semibold">${data.labels?.[0] || ""}</button>
-                        ${data.labels?.[1] ?`
-                            <button class="p-2 rounded-2xl bg-[#FDE68A] text-red-500 font-semibold"> ${data.labels[1]}<button/>`: ""}
+                        ${
+                          data.labels?.[1]
+                            ? `
+                            <button class="p-2 rounded-2xl bg-[#FDE68A] text-red-500 font-semibold"> ${data.labels[1]}<button/>`
+                            : ""
+                        }
                     </div>
 
                     <hr class="text-gray-300">
                     <p class="text-gray-400">${data.author}</p>
-                    <p class="text-gray-400">1/15/2024</p>
+                    <p class="text-gray-400">${new Date(data.createdAt).toLocaleDateString()}</p>
                 </div>
 
 
@@ -78,14 +89,18 @@ const displayloadData =(datas)=>{
             </div>
             <div class="flex items-center gap-2">
                 <h1 class="w-2 h-2 bg-gray-400 rounded-full"></h1>
-                <h1 class="text-gray-400">22/02/2026</h1>
+                <h1 class="text-gray-400">${new Date(data.createdAt).toLocaleDateString()}</h1>
             </div>
         </div>
 
         <div class="flex items-center gap-2">
              <button class="p-2 rounded-2xl bg-red-100 text-red-500 font-semibold">${data.labels?.[0] || ""}</button>
-                        ${data.labels?.[1] ?`
-                            <button class="p-2 rounded-2xl bg-[#FDE68A] text-red-500 font-semibold"> ${data.labels[1]}<button/>`: ""}
+                        ${
+                          data.labels?.[1]
+                            ? `
+                            <button class="p-2 rounded-2xl bg-[#FDE68A] text-red-500 font-semibold"> ${data.labels[1]}<button/>`
+                            : ""
+                        }
         </div>
         <p class="text-gray-400">${data.description}</p>
         <div class="flex bg-[#F8FAFC] p-4 rounded-md justify-evenly">
@@ -107,37 +122,33 @@ const displayloadData =(datas)=>{
     </div>
   </div>
 </dialog>
-    `
-  cardContainer.append(div)
-   });
+    `;
+    cardContainer.append(div);
+  });
+};
 
-}
-
-buttons.forEach(btn =>{
-    btn.addEventListener('click', (e) =>{
-        buttons.forEach(b => {
-            b.classList.remove('bg-[#4A00FF]', 'text-white');
-        });
-        e.currentTarget.classList.add('bg-[#4A00FF]', 'text-white')
-        const status =e.currentTarget.value;
-        fetchdata(status)
-        
-        
-        
+buttons.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    buttons.forEach((b) => {
+      b.classList.remove("bg-[#4A00FF]", "text-white");
     });
+    e.currentTarget.classList.add("bg-[#4A00FF]", "text-white");
+    const status = e.currentTarget.value;
+    fetchdata(status);
+  });
 });
 
-const handelsearch = (searchvalue) =>{
-    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchvalue}`)
+const handelsearch = (searchvalue) => {
+  fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchvalue}`,
+  )
     .then((res) => res.json())
-    .then((data )=> displayloadData(data.data)
-    )
-} 
+    .then((data) => displayloadData(data.data));
+};
 
-searchbtn.addEventListener('click', () =>{
-    const searchissues = searchIssues.value;
-    handelsearch(searchissues);
-    
-})
+searchbtn.addEventListener("click", () => {
+  const searchissues = searchIssues.value;
+  handelsearch(searchissues);
+});
 
-fetchdata()
+fetchdata();
