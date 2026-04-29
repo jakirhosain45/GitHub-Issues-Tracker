@@ -66,15 +66,11 @@ const displayloadData = (datas) => {
                             : ""
                         }
                     </div>
-
                     <hr class="text-gray-300">
                     <p class="text-gray-400">${data.author}</p>
                     <p class="text-gray-400">${new Date(data.createdAt).toLocaleDateString()}</p>
                 </div>
-
-
-
-                
+              
 <dialog id="modal-${data.id}" class="modal modal-bottom sm:modal-middle">
   <div class="modal-box">
     <div class="space-y-4">
@@ -126,7 +122,6 @@ const displayloadData = (datas) => {
     cardContainer.append(div);
   });
 };
-
 buttons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     buttons.forEach((b) => {
@@ -137,7 +132,6 @@ buttons.forEach((btn) => {
     fetchdata(status);
   });
 });
-
 const handelsearch = (searchvalue) => {
   fetch(
     `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchvalue}`,
@@ -145,7 +139,6 @@ const handelsearch = (searchvalue) => {
     .then((res) => res.json())
     .then((data) => displayloadData(data.data));
 };
-
 searchbtn.addEventListener("click", () => {
   const searchissues = searchIssues.value;
   handelsearch(searchissues);
